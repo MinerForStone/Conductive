@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "open=true": { "model": "conductive:block/redstone_component_open" },
+    "open=false": { "model": "conductive:block/redstone_component" }
+  }
+}

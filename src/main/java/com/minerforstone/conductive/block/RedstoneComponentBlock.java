@@ -2,7 +2,6 @@ package com.minerforstone.conductive.block;
 
 import com.minerforstone.conductive.block.entity.RedstoneComponentBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -25,6 +24,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class RedstoneComponentBlock extends Block implements EntityBlock {
@@ -35,7 +35,7 @@ public class RedstoneComponentBlock extends Block implements EntityBlock {
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return new RedstoneComponentBlockEntity(pos, state);
     }
 
@@ -45,7 +45,7 @@ public class RedstoneComponentBlock extends Block implements EntityBlock {
         builder.add(OPEN);
     }
 
-    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter getter, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         if (state.getValue(OPEN))
             return Shapes.box(0f, 0f, 0f, 1f, 0.0625f, 1f);
         else
@@ -53,7 +53,7 @@ public class RedstoneComponentBlock extends Block implements EntityBlock {
     }
 
 
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
 
         if (tryOpen(player, level, pos, state)) return InteractionResult.SUCCESS;
         if (tryClose(player, level, pos, state)) return InteractionResult.SUCCESS;
@@ -64,17 +64,10 @@ public class RedstoneComponentBlock extends Block implements EntityBlock {
                 int pixelX = (int) getTouchedPixel(hitResult).x;
                 int pixelY = (int) getTouchedPixel(hitResult).y;
 
-                player.sendSystemMessage(Component.literal(
-                        "I was last touched at: " +
-                                redstoneComponentBlockEntity.x +
-                                ", " +
-                                redstoneComponentBlockEntity.y
-                        )
-                );
-                player.sendSystemMessage(Component.literal("You touched me at: " + pixelX + ", " + pixelY));
-
-                redstoneComponentBlockEntity.x = pixelX;
-                redstoneComponentBlockEntity.y = pixelY;
+                if (player.getMainHandItem().isEmpty())
+                    redstoneComponentBlockEntity.removePart(pixelX, pixelY);
+                else
+                    redstoneComponentBlockEntity.addPart(pixelX, pixelY, player.getMainHandItem().getItem().toString());
 
                 level.getChunk(pos).setUnsaved(true);
             }

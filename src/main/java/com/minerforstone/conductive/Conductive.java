@@ -51,14 +51,14 @@ public class Conductive
     // Blocks
     public static final RegistryObject<Block> REDSTONE_COMPONENT_BLOCK = BLOCKS.register("redstone_component", () -> new RedstoneComponentBlock(BlockBehaviour.Properties.of()));
     // Block Entities
-    public static final RegistryObject<BlockEntityType<RedstoneComponentBlockEntity>> REDSTONE_COMPONENT_ENTITY = BLOCK_ENTITIES.register("redstone_component_entity", () -> BlockEntityType.Builder.of(RedstoneComponentBlockEntity::new, REDSTONE_COMPONENT_BLOCK.get()).build(null));
+    public static final RegistryObject<BlockEntityType<RedstoneComponentBlockEntity>> REDSTONE_COMPONENT_ENTITY = BLOCK_ENTITIES.register("redstone_component", () -> BlockEntityType.Builder.of(RedstoneComponentBlockEntity::new, REDSTONE_COMPONENT_BLOCK.get()).build(null));
     // Items
     public static final RegistryObject<Item> REDSTONE_COMPONENT_ITEM = ITEMS.register("redstone_component", () -> new BlockItem(REDSTONE_COMPONENT_BLOCK.get(), new Item.Properties()));
 
 
 
     // Create a creative mode tab
-    public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
+    public static final RegistryObject<CreativeModeTab> CONDUCTIVE_TAB = CREATIVE_MODE_TABS.register("conductive", () -> CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> REDSTONE_COMPONENT_ITEM.get().getDefaultInstance())
             .title(Component.literal("Conductive"))

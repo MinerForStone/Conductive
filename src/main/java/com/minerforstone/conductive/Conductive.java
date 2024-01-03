@@ -2,6 +2,7 @@ package com.minerforstone.conductive;
 
 import com.minerforstone.conductive.block.RedstoneComponentBlock;
 import com.minerforstone.conductive.block.entity.RedstoneComponentBlockEntity;
+import com.minerforstone.conductive.client.renderer.blockentity.RedstoneComponentRenderer;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -47,14 +49,12 @@ public class Conductive
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
 
-
     // Blocks
     public static final RegistryObject<Block> REDSTONE_COMPONENT_BLOCK = BLOCKS.register("redstone_component", () -> new RedstoneComponentBlock(BlockBehaviour.Properties.of()));
     // Block Entities
     public static final RegistryObject<BlockEntityType<RedstoneComponentBlockEntity>> REDSTONE_COMPONENT_ENTITY = BLOCK_ENTITIES.register("redstone_component", () -> BlockEntityType.Builder.of(RedstoneComponentBlockEntity::new, REDSTONE_COMPONENT_BLOCK.get()).build(null));
     // Items
     public static final RegistryObject<Item> REDSTONE_COMPONENT_ITEM = ITEMS.register("redstone_component", () -> new BlockItem(REDSTONE_COMPONENT_BLOCK.get(), new Item.Properties()));
-
 
 
     // Create a creative mode tab
@@ -124,5 +124,18 @@ public class Conductive
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
+
+        @SubscribeEvent
+        public static void onRegisterBlockEntityRenderer(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerBlockEntityRenderer(REDSTONE_COMPONENT_ENTITY.get(), RedstoneComponentRenderer::new);
+            LOGGER.debug("[CONDUCTIVE] Renderers have registered");
+        }
+
+        @SubscribeEvent
+        public static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+//            event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("conductive:redstone_trace"), "main"), RedstoneTraceModel::createBodyLayer);
+        }
     }
 }
+
+// TODO: Remove examples and references to examples

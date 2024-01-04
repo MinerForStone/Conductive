@@ -2,11 +2,14 @@ package com.minerforstone.conductive;
 
 import com.minerforstone.conductive.block.RedstoneComponentBlock;
 import com.minerforstone.conductive.block.entity.RedstoneComponentBlockEntity;
+import com.minerforstone.conductive.client.model.TraceModel;
 import com.minerforstone.conductive.client.renderer.blockentity.RedstoneComponentRenderer;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -133,7 +136,7 @@ public class Conductive
 
         @SubscribeEvent
         public static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-//            event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("conductive:redstone_trace"), "main"), RedstoneTraceModel::createBodyLayer);
+            event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("conductive:trace"), "main"), TraceModel::createBodyLayer);
         }
     }
 }

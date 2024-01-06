@@ -48,7 +48,7 @@ public class Conductive
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
 
     // Blocks
-    public static final RegistryObject<Block> REDSTONE_COMPONENT_BLOCK = BLOCKS.register("redstone_component", () -> new RedstoneComponentBlock(BlockBehaviour.Properties.of().destroyTime(0.1F)));
+    public static final RegistryObject<Block> REDSTONE_COMPONENT_BLOCK = BLOCKS.register("redstone_component", () -> new RedstoneComponentBlock(BlockBehaviour.Properties.of()));
     // Block Entities
     public static final RegistryObject<BlockEntityType<RedstoneComponentBlockEntity>> REDSTONE_COMPONENT_ENTITY = BLOCK_ENTITIES.register("redstone_component", () -> BlockEntityType.Builder.of(RedstoneComponentBlockEntity::new, REDSTONE_COMPONENT_BLOCK.get()).build(null));
     // Items

@@ -33,7 +33,7 @@ public class TraceModel extends Model {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		partdefinition.addOrReplaceChild("bit", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -1.0F, 0.0F, 1.0F, 1.0F, 1.0F), PartPose.rotation(0, 0, (float) Math.toRadians(180)));
+		partdefinition.addOrReplaceChild("bit", CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, 0.01F, 0.0F, 1.0F, 0.0F, 1.0F), PartPose.ZERO);
 
 		return LayerDefinition.create(meshdefinition, 16, 16);
 	}

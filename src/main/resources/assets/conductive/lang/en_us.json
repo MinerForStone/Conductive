@@ -1,3 +1,5 @@
 {
-  "block.conductive.redstone_component": "Redstone Component"
+  "block.conductive.redstone_component": "Redstone Component",
+  "item.conductive.redstone_component_lid": "Redstone Component Lid",
+  "item.conductive.redstone_trace": "Redstone Trace"
 }

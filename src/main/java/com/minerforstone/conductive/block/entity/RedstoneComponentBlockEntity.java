@@ -6,9 +6,12 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import static com.minerforstone.conductive.Conductive.REDSTONE_COMPONENT_ENTITY;
@@ -26,7 +29,7 @@ public class RedstoneComponentBlockEntity extends BlockEntity {
         return this.getBlockState().getValue(BooleanProperty.create("open"));
     }
 
-    public void addPart(int x, int y, String id) {
+    public boolean addPart(int x, int y, String id) {
         if (getPartId(x, y) == -1) {
             parts.add(new CompoundTag() {{
                 putString("id", id);
@@ -34,15 +37,20 @@ public class RedstoneComponentBlockEntity extends BlockEntity {
                 putInt("y", y);
             }});
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 2);
+            return true;
         }
+        return false;
     }
 
-    public void removePart(int x, int y) {
+    public Item removePart(int x, int y) {
         int removeId = getPartId(x, y);
         if (removeId != -1) {
+            Item returnItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(parts.getCompound(removeId).getString("id")));
             parts.remove(removeId);
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 2);
+            return returnItem;
         }
+        return null;
     }
 
     public int getPartId(int x, int y) {

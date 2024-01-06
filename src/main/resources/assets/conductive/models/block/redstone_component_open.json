@@ -3,7 +3,7 @@
     "textures": {
         "particle": "block/repeater",
         "slab": "block/smooth_stone",
-        "top": "block/repeater"
+        "top": "conductive:block/component_inside"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],

@@ -1,6 +1,36 @@
 {
   "variants": {
-    "open=true": { "model": "conductive:block/redstone_component_open" },
-    "open=false": { "model": "conductive:block/redstone_component" }
+    "open=true,facing=north": {
+      "model": "conductive:block/redstone_component_open",
+      "y": 180
+    },
+    "open=true,facing=east": {
+      "model": "conductive:block/redstone_component_open",
+      "y": 270
+    },
+    "open=true,facing=south": {
+      "model": "conductive:block/redstone_component_open",
+      "y": 0
+    },
+    "open=true,facing=west": {
+      "model": "conductive:block/redstone_component_open",
+      "y": 90
+    },
+    "open=false,facing=north": {
+      "model": "conductive:block/redstone_component",
+      "y": 180
+    },
+    "open=false,facing=east": {
+      "model": "conductive:block/redstone_component",
+      "y": 270
+    },
+    "open=false,facing=south": {
+      "model": "conductive:block/redstone_component",
+      "y": 0
+    },
+    "open=false,facing=west": {
+      "model": "conductive:block/redstone_component",
+      "y": 90
+    }
   }
 }

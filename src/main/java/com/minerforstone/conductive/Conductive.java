@@ -40,25 +40,21 @@ import org.slf4j.Logger;
 @Mod(Conductive.MODID)
 public class Conductive
 {
-    // Define mod id in a common place for everything to reference
     public static final String MODID = "conductive";
-    // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
-    // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
-    // Create a Deferred Register to hold Items which will all be registered under the "examplemod" namespace
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-    // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "examplemod" namespace
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
 
     // Blocks
-    public static final RegistryObject<Block> REDSTONE_COMPONENT_BLOCK = BLOCKS.register("redstone_component", () -> new RedstoneComponentBlock(BlockBehaviour.Properties.of()));
+    public static final RegistryObject<Block> REDSTONE_COMPONENT_BLOCK = BLOCKS.register("redstone_component", () -> new RedstoneComponentBlock(BlockBehaviour.Properties.of().destroyTime(0.1F)));
     // Block Entities
     public static final RegistryObject<BlockEntityType<RedstoneComponentBlockEntity>> REDSTONE_COMPONENT_ENTITY = BLOCK_ENTITIES.register("redstone_component", () -> BlockEntityType.Builder.of(RedstoneComponentBlockEntity::new, REDSTONE_COMPONENT_BLOCK.get()).build(null));
     // Items
     public static final RegistryObject<Item> REDSTONE_COMPONENT_ITEM = ITEMS.register("redstone_component", () -> new BlockItem(REDSTONE_COMPONENT_BLOCK.get(), new Item.Properties()));
-
+    public static final RegistryObject<Item> COMPONENT_LID = ITEMS.register("redstone_component_lid", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> REDSTONE_TRACE = ITEMS.register("redstone_trace", () -> new Item(new Item.Properties()));
 
     // Create a creative mode tab
     public static final RegistryObject<CreativeModeTab> CONDUCTIVE_TAB = CREATIVE_MODE_TABS.register("conductive", () -> CreativeModeTab.builder()
@@ -67,6 +63,8 @@ public class Conductive
             .title(Component.literal("Conductive"))
             .displayItems((parameters, output) -> {
                 output.accept(REDSTONE_COMPONENT_ITEM.get());
+                output.accept(COMPONENT_LID.get());
+                output.accept(REDSTONE_TRACE.get());
             }).build());
 
     public Conductive()
